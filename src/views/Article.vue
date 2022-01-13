@@ -950,7 +950,6 @@ export default {
   .message-get {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
     margin: 10px 0;
     .message-get-sub {
       margin: 6px 0;
@@ -966,9 +965,6 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        img {
-          color: blue;
-        }
       }
     }
   }
