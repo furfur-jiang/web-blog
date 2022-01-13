@@ -1,24 +1,27 @@
-# web-blog
+# 项目名待定
 
-## Project setup
-```
-yarn install
-```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 功能
 
-### Lints and fixes files
-```
-yarn lint
-```
+前端：
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [x] 首页文章列表
+  - [x] 文章详情页
+  - [ ] 创作文章
+- [ ] 活动区
+  - [ ] 创作者活动
+  - [ ] 广告活动
+  - [ ] 公开技术会
+  - [ ] 招聘
+- [ ] 论坛
+  - [ ] 发个人动态（摸鱼）
+  - [ ] 讨论技术
+- [ ] 个人信息页
+- [ ] 登录注册
+
+
+
+后端：
+
+- [ ] 设计数据库
