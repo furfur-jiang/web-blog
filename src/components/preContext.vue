@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PreContextItem from './preContextItem.vue'
+import PreContextItem from './PreContextItem.vue'
 export default {
   name: 'PreContext',
   components: {

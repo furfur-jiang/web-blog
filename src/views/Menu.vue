@@ -31,10 +31,10 @@
           >
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
-          <el-button type="primary" style="margin-left: 10px;">
+          <el-button type="primary" style="margin-left: 10px;" @click="go('author')">
             创作者中心
           </el-button>
-          <el-button>个人中心</el-button>
+          <el-button  @click="go('mine')">个人中心</el-button>
         </div>
       </el-menu>
     </el-header>
@@ -60,6 +60,9 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
     },
+    go(path){
+      this.$router.push({ path: `/${path}` })
+    }
   },
 }
 </script>

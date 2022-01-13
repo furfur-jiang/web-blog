@@ -15,7 +15,7 @@
 
 <script>
 
-import PreContext from '../components/preContext.vue'
+import PreContext from '../components/PreContext.vue'
 export default {
   name:'Home',
   components: {
