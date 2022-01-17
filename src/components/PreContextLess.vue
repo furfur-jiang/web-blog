@@ -1,7 +1,7 @@
 <template>
 <div style="margin-bottom:20px">
     <div class="title">
-      <span>高频面试题之防抖节流及代码实现</span>
+      <span> 高频面试题之防抖节流及代码实现 </span>
       <i class="el-icon-more"></i>
     </div>
     <div class="detail">2020-06-07 21:19 14展现 · 1459阅读 · 2点赞 · 2评论 · 0收藏</div>
