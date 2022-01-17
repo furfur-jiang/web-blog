@@ -11,8 +11,10 @@ import Index from '../views/Author/Index.vue'
 import Problems from '../views/Author/Problems.vue'
 import CreateArticle from '../views/CreateArticle.vue'
 import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
 import MenuContent from '../views/MenuContent.vue'
 import Mine from '../views/Mine.vue'
+import EditUserMessage from '../views/Mine/EditUserMessage.vue'
 import Playground from '../views/Playground.vue'
 
 Vue.use(VueRouter)
@@ -30,6 +32,11 @@ const routes = [
         component: Home,
       },
       {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+      },
+      {
         path: '/article',
         name: 'article',
         component: Article,
@@ -43,6 +50,11 @@ const routes = [
         path: '/playground',
         name: 'Playground',
         component: Playground,
+      },
+      {
+        path: 'edit-user-message',
+        name: 'EditUserMessage',
+        component: EditUserMessage,
       },
       {
         path: '/author',

@@ -3,12 +3,15 @@
     <div>
       <el-card class="main">
         <div class="user-message">
-          <img src="../assets/logo.png" />
-          <div class="meaasge-name">
-            <h1>furfur</h1>
-            <span class="job">前端工程师</span>
-            <span class="job">简介</span>
+          <div style="display: flex;">
+            <img src="../assets/logo.png" />
+            <div class="meaasge-name">
+              <h1>furfur</h1>
+              <span class="job">前端工程师</span>
+              <span class="job">简介</span>
+            </div>
           </div>
+          <el-button type="primary" plain @click="editUserMessage">编辑个人资料</el-button>
         </div>
       </el-card>
       <el-card class="underContent">
@@ -19,11 +22,11 @@
           <el-tab-pane label="点赞文章" name="second">
             <PreContext />
           </el-tab-pane>
-          <el-tab-pane label="关注者" name="third">
-            <UserList />
-          </el-tab-pane>
           <el-tab-pane label="关注了" name="fourth">
-            <UserList />
+            <UserList :attention="false" />
+          </el-tab-pane>
+          <el-tab-pane label="关注者" name="third">
+            <UserList :attention="true" />
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -42,8 +45,8 @@
           <span>文章被阅读1234</span>
         </div>
         <div class="message-get-sub">
-          <div><img src="../assets/eye-active.svg" /></div>
-          <span>文章被阅读1234</span>
+          <div><img src="../assets/comment-active.svg" /></div>
+          <span>文章被评论1234</span>
         </div>
       </div>
     </el-card>
@@ -68,6 +71,9 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event)
     },
+    editUserMessage(){
+      this.$router.push({path:'edit-user-message'})
+    }
   },
 }
 </script>
@@ -81,6 +87,8 @@ export default {
     .user-message {
       display: flex;
       margin-bottom: 10px;
+      justify-content: space-between;
+      align-items: flex-start;
       img {
         width: 100px;
         height: 100px;

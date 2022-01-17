@@ -9,7 +9,7 @@
         @select="handleSelect"
       >
         <el-menu-item>
-          <img alt="logo" src="../assets/offer.svg" style="padding: 10px;" />
+          <img alt="logo" src="../assets/offer.svg" style="padding: 10px;" @click="go('home')"/>
         </el-menu-item>
         <el-menu-item index="home">
           <Icon type="ios-paper" />
@@ -34,7 +34,8 @@
           <el-button type="primary" style="margin-left: 10px;" @click="go('author')">
             创作者中心
           </el-button>
-          <el-button  @click="go('mine')">个人中心</el-button>
+          <el-button v-if="isLogin" @click="go('mine')">个人中心</el-button>
+          <el-button v-else @click="go('login')">登录</el-button>
         </div>
       </el-menu>
     </el-header>
@@ -53,7 +54,8 @@ export default {
   data() {
     return {
       activeIndex: 'home',
-      search:''
+      search:'',
+      isLogin:false
     }
   },
   methods: {

@@ -31,7 +31,7 @@
     >
       <div class="dialog-check">
         <div class="dialog-check-item">
-          <span style="width: 150px; color: black;">
+          <span style="width: 170px; color: black;">
             <span style="color: red;">*</span>
             分类：
           </span>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="dialog-check-item">
-        <span style="color: black;">
+        <span style="color: black; width: 90px;">
           <span style="color: red;">*</span>
           摘要:
         </span>
@@ -194,17 +194,25 @@ span {
   margin: 0 10px 10px 0;
   text-align: center;
 }
-.avatar-uploader .el-upload {
+.dialog-check {
+  display: flex;
+  flex-direction: column;
+}
+.dialog-check-item {
+  display: flex;
+}
+
+/deep/ .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-.avatar-uploader .el-upload:hover {
+/deep/ .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
-.avatar-uploader-icon {
+/deep/ .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
   width: 178px;
@@ -212,16 +220,9 @@ span {
   line-height: 178px;
   text-align: center;
 }
-.avatar {
+/deep/ .avatar {
   width: 178px;
   height: 178px;
   display: block;
-}
-.dialog-check {
-  display: flex;
-  flex-direction: column;
-}
-.dialog-check-item {
-  display: flex;
 }
 </style>

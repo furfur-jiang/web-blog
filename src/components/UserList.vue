@@ -1,7 +1,10 @@
 <template>
   <div>
     <div v-for="user in userList" :key="user.id">
-      <UserMessage />
+      <UserMessage>
+        <el-button v-if="attention"  type="success">取消关注</el-button>
+        <el-button v-else type="success" plain>+ 关注</el-button>
+      </UserMessage>
     </div>
   </div>
 </template>
@@ -18,6 +21,12 @@ export default {
       userList: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }],
     }
   },
+  props:{
+    attention:{
+      type:Boolean,
+      default:false
+    }
+  }
 }
 </script>
 
