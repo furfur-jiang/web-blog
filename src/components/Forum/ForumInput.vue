@@ -1,5 +1,7 @@
 <template>
-  <h1>This is an Playground page</h1>
+  <div>
+    <el-input />
+  </div>
 </template>
 
 <script>

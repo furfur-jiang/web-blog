@@ -10,12 +10,12 @@ import FansManage from '../views/Author/FansManage.vue'
 import Index from '../views/Author/Index.vue'
 import Problems from '../views/Author/Problems.vue'
 import CreateArticle from '../views/CreateArticle.vue'
+import Forum from '../views/Forum.vue'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import MenuContent from '../views/MenuContent.vue'
 import Mine from '../views/Mine.vue'
 import EditUserMessage from '../views/Mine/EditUserMessage.vue'
-import Playground from '../views/Playground.vue'
 
 Vue.use(VueRouter)
 
@@ -47,9 +47,9 @@ const routes = [
         component: Activity,
       },
       {
-        path: '/playground',
-        name: 'Playground',
-        component: Playground,
+        path: '/forum',
+        name: 'Forum',
+        component: Forum,
       },
       {
         path: 'edit-user-message',

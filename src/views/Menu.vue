@@ -19,9 +19,9 @@
           <Icon type="ios-stats" />
           活动
         </el-menu-item>
-        <el-menu-item index="playground">
+        <el-menu-item index="forum">
           <Icon type="ios-people" />
-          广场
+          论坛
         </el-menu-item>
         <div class="headRight">
           <el-input
