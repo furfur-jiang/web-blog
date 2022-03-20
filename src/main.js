@@ -6,11 +6,18 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import axios from 'axios'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(ViewUI);
+
+var instance = axios.create({
+    baseURL: 'http://localhost:8089/web_blog/',
+    timeout: 1000,
+});
+Vue.prototype.$http = instance
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

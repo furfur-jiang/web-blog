@@ -883,6 +883,9 @@ export default {
   created() {
     this.id = this.$route.query.id
   },
+  methods: {
+    
+  },
 }
 </script>
 
