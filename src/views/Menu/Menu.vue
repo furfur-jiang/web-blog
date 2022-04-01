@@ -2,14 +2,19 @@
   <el-container>
     <el-header style="padding: 0;">
       <el-menu
-      router
+        router
         :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         @select="handleSelect"
       >
         <el-menu-item>
-          <img alt="logo" src="../../assets/offer.svg" style="padding: 10px;" @click="go('home')"/>
+          <img
+            alt="logo"
+            src="../../assets/offer.svg"
+            style="padding: 10px;"
+            @click="go('home')"
+          />
         </el-menu-item>
         <el-menu-item index="home">
           <Icon type="ios-paper" />
@@ -31,7 +36,11 @@
           >
             <i slot="prefix" class="el-input__icon el-icon-search"></i>
           </el-input>
-          <el-button type="primary" style="margin-left: 10px;" @click="go('author')">
+          <el-button
+            type="primary"
+            style="margin-left: 10px;"
+            @click="go('author')"
+          >
             创作者中心
           </el-button>
           <el-button v-if="isLogin" @click="go('mine')">个人中心</el-button>
@@ -50,17 +59,17 @@ export default {
   data() {
     return {
       activeIndex: 'home',
-      search:'',
-      isLogin:false
+      search: '',
+      isLogin: true,
     }
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
     },
-    go(path){
+    go(path) {
       this.$router.push({ path: `/${path}` })
-    }
+    },
   },
 }
 </script>

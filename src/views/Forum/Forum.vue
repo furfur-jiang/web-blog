@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <CommentAdd />
+  <div class="box">
+    <CommentAdd isForum=""/>
     <CommentList :articleId="articleId" />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.box {
   width: 900px;
 }
 </style>

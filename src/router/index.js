@@ -24,7 +24,7 @@ import Index from '../views/Author/components/Index.vue'
 import Problems from '../views/Author/components/Problems.vue'
 
 // 活动
-import Activity from '../views/Activity.vue'
+import Activity from '../views/Activity/Activity.vue'
 
 // 文章
 import Article from '../views/Article.vue'

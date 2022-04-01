@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ActivityCard from '../components/Activity/ActivityCard.vue'
+import ActivityCard from './ActivityCard.vue'
 export default {
   name: 'Activity',
   components: {

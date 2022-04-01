@@ -3,14 +3,23 @@
     <div class="btngroups">
       <!-- TODO：查变形 -->
       <el-button style="display: none;"></el-button>
-      <el-button circle>
-        <img src="../assets/good-black.svg" />
-      </el-button>
-      <el-button circle href="#comment">
+      <el-badge
+        :value="likeNum"
+        class="item"
+        :type="isLike ? 'primary' : 'info'"
+      >
+        <el-button circle @click="likeBtn">
+          <img src="../assets/good-blue.svg" v-if="isLike" />
+          <img src="../assets/good-black.svg" v-else />
+        </el-button>
+      </el-badge>
+
+      <el-button circle @click="toComment">
         <img src="../assets/comment-black.svg" />
       </el-button>
-      <el-button circle>
-        <img src="../assets/collect-black.svg" />
+      <el-button circle @click="collectBtn">
+        <img src="../assets/collect-yellow.svg" v-if="isCollect" />
+        <img src="../assets/collect-black.svg" v-else />
       </el-button>
     </div>
     <el-card class="article">
@@ -23,13 +32,30 @@
             <span class="user-time">2019年10月24日 09:15 阅读1999</span>
           </div>
         </div>
-        <el-button type="primary" plain size="small">+ 关注</el-button>
+        <el-button
+          type="primary"
+          plain
+          size="small"
+          v-if="!isFocus"
+          @click="focusBtn"
+        >
+          + 关注
+        </el-button>
+        <el-button
+          type="info"
+          plain
+          size="small"
+          v-if="isFocus"
+          @click="focusBtn"
+        >
+          取消关注
+        </el-button>
       </div>
       <v-html>
-        {{article.content}}
+        {{ article.content }}
       </v-html>
-      <h1 style="margin:20px 0" id="comment">评论</h1>
-      <Forum :articleId="this.$route.query.id"/>
+      <h1 style="margin: 20px 0;" id="comment">评论</h1>
+      <Forum :articleId="Number(this.$route.query.id)" />
     </el-card>
     <el-card class="meaasge-card">
       <UserMessage />
@@ -55,23 +81,49 @@ export default {
   name: 'Article',
   components: {
     UserMessage,
-    Forum
-},
+    Forum,
+  },
   data() {
     return {
       id: null,
-      article:{}
+      isLike: false,
+      isCollect: false,
+      article: {},
+      likeNum: 20,
+      isFocus:false//需要请求接口判断
     }
   },
   created() {
     this.id = this.$route.query.id
   },
   methods: {
-    getArticle(){
+    getArticle() {
       this.article = {
-        content:``,
-        
+        content: ``,
+        like: true,
+        collect: false,
       }
+      this.isLike = this.article.like
+      this.isCollect = this.article.collect
+    },
+    toComment() {
+      document.getElementById('comment').scrollIntoView()
+    },
+    likeBtn() {
+      this.isLike = !this.isLike
+      if (this.isLike) {
+        this.likeNum += 1
+      } else {
+        this.likeNum -= 1
+      }
+      //请求
+    },
+    collectBtn() {
+      this.isCollect = !this.isCollect
+      //请求
+    },
+    focusBtn(){
+      this.isFocus = !this.isFocus
     }
   },
 }
@@ -159,5 +211,17 @@ export default {
       }
     }
   }
+}
+
+.btngroups .el-button:focus,
+.btngroups .el-button:hover {
+  background: #fff;
+  border-color: #dcdfe6;
+}
+</style>
+<style scoped>
+/deep/ .el-badge__content.is-fixed {
+  right: 15px;
+  top: 8px;
 }
 </style>

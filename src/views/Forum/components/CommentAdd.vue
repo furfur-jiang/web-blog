@@ -60,6 +60,6 @@ export default {
 
 <style scoped>
 .container {
-  width: 900px;
+  width: 85%;
 }
 </style>

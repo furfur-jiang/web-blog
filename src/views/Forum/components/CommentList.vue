@@ -103,6 +103,7 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
+      width: 95%;
 }
 .subComment {
   background: #f9fafb;
