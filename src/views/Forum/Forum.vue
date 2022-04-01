@@ -1,31 +1,30 @@
 <template>
-  <div class="container">
-    <comment :placeholder="'上传新鲜事'" @submit="submitComment"/>
+  <div>
+    <CommentAdd />
+    <CommentList :articleId="articleId" />
   </div>
 </template>
 
 <script>
-import Comment from '../../components/Comment/Comment.vue'
-
+import CommentAdd from './components/CommentAdd.vue'
+import CommentList from './components/CommentList.vue'
 export default {
-  components: {Comment},
-  data(){
-    return {
-      
-    }
+  components: {
+    CommentAdd,
+    CommentList,
   },
-  methods:{
-    submitComment(content){
-      console.log(content)
-    }
-  }
+  props: {
+    articleId: {
+      //有则要请求
+      type: Number,
+      props: 0,
+    },
+  },
 }
 </script>
 
 <style scoped>
 .container {
   width: 900px;
-  height: 100vh;
 }
-
 </style>

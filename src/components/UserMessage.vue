@@ -3,8 +3,8 @@
     <div>
       <img src="../assets/logo.png" />
       <div class="meaasge-name">
-        <span>furfur</span>
-        <span class="job">前端工程师</span>
+        <span>{{name}}</span>
+        <span class="job">{{job}}</span>
       </div>
     </div>
     <div>
@@ -14,7 +14,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props:{
+    name:{
+      type:String,
+      default:'furfur'
+    },
+    job:{
+      type:String,
+      default:'前端工程师'
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
