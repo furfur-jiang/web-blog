@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ArticleData from '../../components/ArticleData'
+import ArticleData from '../../../components/ArticleData'
 
 export default {
   name: 'ContentManage',

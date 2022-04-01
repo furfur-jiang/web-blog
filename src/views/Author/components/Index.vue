@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import PreContextLess from '../../components/PreContextLess'
-import ArticleData from '../../components/ArticleData'
+import ArticleData from '../../../components/ArticleData'
+import PreContextLess from '../../../components/PreContext/PreContextLess'
 export default {
   name: 'Index',
   components: {

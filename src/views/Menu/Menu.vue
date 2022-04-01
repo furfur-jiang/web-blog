@@ -9,7 +9,7 @@
         @select="handleSelect"
       >
         <el-menu-item>
-          <img alt="logo" src="../assets/offer.svg" style="padding: 10px;" @click="go('home')"/>
+          <img alt="logo" src="../../assets/offer.svg" style="padding: 10px;" @click="go('home')"/>
         </el-menu-item>
         <el-menu-item index="home">
           <Icon type="ios-paper" />
@@ -45,12 +45,8 @@
   </el-container>
 </template>
 <script>
-// import Home from './Home.vue'
 export default {
   name: 'Menu',
-  // components:{
-  //   Home
-  // },
   data() {
     return {
       activeIndex: 'home',

@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import PreContext from '../components/PreContext.vue'
+import PreContext from '../components/PreContext/PreContext.vue'
 import UserList from '../components/UserList.vue'
 export default {
   name: 'Mine',

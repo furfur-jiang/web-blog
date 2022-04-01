@@ -8,19 +8,19 @@
           内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
         </p>
       </div>
-      <img src="../assets/logo.png" />
+      <img src="../../assets/logo.png" />
     </div>
     <div class="icons">
       <span>
-        <img src="../assets/eye.svg" />
+        <img src="../../assets/eye.svg" />
         <span>20</span>
       </span>
       <span>
-        <img src="../assets/good.svg" />
+        <img src="../../assets/good.svg" />
         <span>20</span>
       </span>
       <span>
-        <img src="../assets/comment.svg" />
+        <img src="../../assets/comment.svg" />
         <span>20</span>
       </span>
     </div>

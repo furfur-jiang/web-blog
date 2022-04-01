@@ -1,21 +1,40 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Activity from '../views/Activity.vue'
-import Article from '../views/Article.vue'
-import Author from '../views/Author.vue'
-import ActivityManage from '../views/Author/ActivityManage.vue'
-import ArticleManage from '../views/Author/ArticleManage.vue'
-import ContentManage from '../views/Author/ContentManage.vue'
-import FansManage from '../views/Author/FansManage.vue'
-import Index from '../views/Author/Index.vue'
-import Problems from '../views/Author/Problems.vue'
-import CreateArticle from '../views/CreateArticle.vue'
-import Forum from '../views/Forum.vue'
+
+
+
+// 首页
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import MenuContent from '../views/MenuContent.vue'
+
+// 页面承载
+import MenuContent from '../views/Menu/MenuContent.vue'
+
+// 个人中心
 import Mine from '../views/Mine.vue'
 import EditUserMessage from '../views/Mine/EditUserMessage.vue'
+
+// 创作者中心
+import CreateArticle from '../views/Author/CreateArticle.vue'
+import Author from '../views/Author/Author.vue'
+import ActivityManage from '../views/Author/components/ActivityManage.vue'
+import ArticleManage from '../views/Author/components/ArticleManage.vue'
+import ContentManage from '../views/Author/components/ContentManage.vue'
+import FansManage from '../views/Author/components/FansManage.vue'
+import Index from '../views/Author/components/Index.vue'
+import Problems from '../views/Author/components/Problems.vue'
+
+// 活动
+import Activity from '../views/Activity.vue'
+
+// 文章
+import Article from '../views/Article.vue'
+
+
+// 登录/注册
+import Login from '../views/Login.vue'
+
+// 论坛
+import Forum from '../views/Forum/Forum.vue'
 
 Vue.use(VueRouter)
 

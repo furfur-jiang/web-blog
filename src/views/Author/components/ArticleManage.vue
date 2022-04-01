@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import PreContextLess from '../../components/PreContextLess'
+import PreContextLess from '../../../components/PreContext/PreContextLess'
 export default {
   name: 'ArticleManage',
   components: {

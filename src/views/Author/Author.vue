@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import UserMessage from '../components/UserMessage'
+import UserMessage from '../../components/UserMessage'
 
 export default {
   name: 'Author',
