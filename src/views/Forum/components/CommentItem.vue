@@ -6,7 +6,7 @@
         v-if="comment.subComment && comment.subComment.length"
         @click="showCommentDetail = !showCommentDetail"
       >
-        展开
+        {{showCommentDetail?'关闭':'展开'}}
       </span>
     </p>
     <p>{{ comment.content }}</p>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import UserMessage from '../../../components/UserMessage.vue'
+import UserMessage from '../../Mine/components/UserMessage.vue'
 import CommentAdd from './CommentAdd.vue'
 const CommentList = () => import('./CommentList.vue') //异步加载组件引入解决循环引用问题
 export default {

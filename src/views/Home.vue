@@ -1,19 +1,24 @@
 <template>
-    <Tabs value="name1" style="width: 960px; overflow-y: auto">
+    <Tabs
+        :value="activeName"
+        style="width: 960px; overflow-y: auto"
+        @on-click="handleClick"
+    >
         <!-- 循环 -->
-        <TabPane label="前端" name="name1" id="1">
-            <PreContext />
-        </TabPane>
-        <TabPane label="后端" name="name2"  id="2">
-            <PreContext />
-        </TabPane>
-        <TabPane label="开发工具" name="name3"  id="3">
-            <PreContext />
+        <TabPane
+            :label="label.name"
+            :name="label.id + ''"
+            :id="label.id"
+            v-for="label in labelList"
+            :key="label.id"
+        >
+            <PreContext :labelId="label.id" :selectId="selectId" />
         </TabPane>
     </Tabs>
 </template>
 
 <script>
+import router from "@/router";
 import PreContext from "../components/PreContext/PreContext.vue";
 export default {
     name: "Home",
@@ -22,17 +27,28 @@ export default {
     },
     data() {
         return {
-            list: [],
+            labelList: [],
+            selectId: null,
+            activeName: "",
         };
     },
+    created() {
+        this.initLabelList();
+    },
     methods: {
-        initList() {
-            this.list = [];
-            this.$http.get("/article/getArticleByLabelId", this.registerForm).then((res) => {
+        handleClick(id) {
+            this.selectId = Number(id);
+        },
+        initLabelList() {
+            this.$http.get("/web_blog/articleLabel/getAllLabel").then((res) => {
                 if (res.data.code === 0) {
-                    this.$router.push({ path: `/home` });
+                    this.labelList = res.data.data;
+                    if (this.labelList.length > 0) {
+                        this.selectId = this.labelList[0].id;
+                    }
                 } else {
-                    alert(res.data.msg);
+                    alert("请求标签失败，请重新登陆");
+                    router.push("/login");
                 }
             });
         },

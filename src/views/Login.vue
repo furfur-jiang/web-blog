@@ -38,9 +38,13 @@
                         show-password
                     ></el-input>
                 </el-form-item>
-
+                <!-- <img :src="base64Img" /> -->
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('loginForm')">
+                    <el-button
+                        type="primary"
+                        @click="submitLoginForm('loginForm')"
+                        :loading="loginBtnLoading"
+                    >
                         登录
                     </el-button>
                     <el-button @click="resetForm('loginForm')">重置</el-button>
@@ -76,7 +80,8 @@
                 <el-form-item>
                     <el-button
                         type="primary"
-                        @click="submitForm('registerForm')"
+                        @click="submitRegisterForm('registerForm')"
+                        :loading="registerBtnLoading"
                     >
                         注册
                     </el-button>
@@ -90,6 +95,8 @@
 </template>
 
 <script>
+import { ADD_TOKEN, ADD_PHONE, ADD_ID, ADD_NAME } from "@/store/types";
+
 export default {
     name: "Login",
     data() {
@@ -114,9 +121,11 @@ export default {
         };
         return {
             isLogin: true,
+            loginBtnLoading: false,
+            registerBtnLoading: false,
             loginForm: {
-                phone: "",
-                password: "",
+                phone: "13715752551",
+                password: "123",
             },
             loginRules: {
                 phone: [
@@ -125,12 +134,12 @@ export default {
                         message: "请输入手机号",
                         trigger: "blur",
                     },
-                    {
-                        min: 11,
-                        max: 11,
-                        message: "请输入正确手机号",
-                        trigger: "blur",
-                    },
+                    // {
+                    //     min: 11,
+                    //     max: 11,
+                    //     message: "请输入正确手机号",
+                    //     trigger: "blur",
+                    // },
                 ],
                 password: [
                     { required: true, message: "请输入密码", trigger: "blur" },
@@ -143,9 +152,10 @@ export default {
                 ],
             },
             registerForm: {
-                phone: "",
-                password: "",
-                checkpassword: "",
+                name: "fur",
+                phone: "13715752552",
+                password: "123",
+                checkpassword: "123",
             },
             registerRules: {
                 phone: [
@@ -154,12 +164,12 @@ export default {
                         message: "请输入手机号",
                         trigger: "blur",
                     },
-                    {
-                        min: 11,
-                        max: 11,
-                        message: "请输入正确手机号",
-                        trigger: "blur",
-                    },
+                    // {
+                    //     min: 11,
+                    //     max: 11,
+                    //     message: "请输入正确手机号",
+                    //     trigger: "blur",
+                    // },
                 ],
                 name: [
                     { required: true, message: "请输入名称", trigger: "blur" },
@@ -191,24 +201,56 @@ export default {
             },
         };
     },
+    mounted() {},
     methods: {
         gotoCard(isLogin) {
             this.isLogin = isLogin;
         },
-        submitForm(formName) {
+        checkCheck() {},
+        submitRegisterForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$http
-                        .post("/user/addUser", this.registerForm)
+                        .post("/web_blog/user/saveUser", this.registerForm)
                         .then((res) => {
                             if (res.data.code === 0) {
-                                this.$router.push({ path: `/home` });
-                            }else{
-                              alert(res.data.msg);
+                                this.loginForm.phone = this.registerForm.phone;
+                                this.loginForm.password =
+                                    this.registerForm.password;
+                                this.submitLoginForm("loginForm");
+                                this.goHome();
+                                this.registerBtnLoading = false;
+                            } else {
+                                alert(res.data.msg);
+                                this.registerBtnLoading = false;
                             }
                         });
-                    
                 } else {
+                    console.log("error submit!!");
+                    this.registerBtnLoading = false;
+                    return false;
+                }
+            });
+        },
+        submitLoginForm(formName) {
+            console.log(formName);
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$http
+                        .post("/login/checkLogin", this.loginForm)
+                        .then((res) => {
+                            res = res.data;
+                            if (res.code === 0) {
+                                this.setUserLocal(res.data);
+                                this.goHome();
+                                this.loginBtnLoading = false;
+                            } else {
+                                alert(res.data.msg);
+                                this.loginBtnLoading = false;
+                            }
+                        });
+                } else {
+                    this.loginBtnLoading = false;
                     console.log("error submit!!");
                     return false;
                 }
@@ -216,6 +258,13 @@ export default {
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
+        },
+        setUserLocal(user) {
+            const { token, phone, id, name } = user;
+            this.$store.commit(ADD_TOKEN, token);
+            this.$store.commit(ADD_PHONE, phone);
+            this.$store.commit(ADD_ID, id);
+            this.$store.commit(ADD_NAME, name);
         },
         goHome() {
             this.$router.push({ path: "home" });

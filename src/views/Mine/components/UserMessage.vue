@@ -1,10 +1,11 @@
 <template>
   <div class="user-message">
     <div>
-      <img src="../assets/logo.png" />
-      <div class="meaasge-name">
+      <img v-if="!img" src="../../../assets/head1.png" />
+      <img v-else :src="img" />
+      <div class="message-name">
         <span>{{name}}</span>
-        <span class="job">{{job}}</span>
+        <span class="position">{{position}}</span>
       </div>
     </div>
     <div>
@@ -18,11 +19,15 @@ export default {
   props:{
     name:{
       type:String,
-      default:'furfur'
+      default:''
     },
-    job:{
+    position:{
       type:String,
-      default:'前端工程师'
+      default:''
+    },
+    img:{
+      type:String,
+      default:''
     }
   }
 }
@@ -44,12 +49,12 @@ export default {
     max-width: 100%;
     max-height: 100%;
   }
-  .meaasge-name {
+  .message-name {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 0 10px;
-    .job {
+    .position {
       color: #4a4e58;
     }
   }
