@@ -2,9 +2,10 @@
     <el-container class="container">
         <el-card class="menu-list">
             <UserMessage
+                v-if="user.name"
                 :name="user.name"
                 :position="user.position"
-                :img="blogUser.head_portrait"
+                :img="user.headPortrait"
             />
             <el-button
                 type="primary"
@@ -66,7 +67,7 @@
 
 <script>
 import UserMessage from "../Mine/components/UserMessage";
-
+import router from "@/router";
 export default {
     name: "Author",
     components: {
@@ -88,14 +89,19 @@ export default {
     },
     methods: {
         getUserById() {
+            console.log(this.userId)
             this.$http
                 .get(`/web_blog/user/getUserById?id=${this.userId}`)
                 .then((res) => {
+                    console.log(res)
                     if (res.data.code === 0) {
                         this.user = res.data.data;
                         console.log("user", this.user);
                     } else {
-                        alert("请求用户失败，请重新登陆");
+                        this.$message({
+                            type:'error',
+                            message:'请求用户失败，请重新登陆'
+                        })
                         router.push("/login");
                     }
                 })

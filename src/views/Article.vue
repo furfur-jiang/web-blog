@@ -37,13 +37,13 @@
             <div class="user-card">
                 <div class="user-message">
                     <img
-                        v-if="!blogUser.head_portrait"
+                        v-if="!blogUser.headPortrait"
                         src="@/assets/head1.png"
                     />
-                    <img v-else :src="blogUser.head_portrait" />
+                    <img v-else :src="cHeadPortrait" />
                     <div>
                         <span class="user-name">{{ blogUser.name }}</span>
-                        <span class="user-time">{{ createTime }} 阅读1999</span>
+                        <span class="user-time">{{ createTime }} 阅读{{article.visitCount}}</span>
                         <a v-if="showEdit" @click="toEditArticle">编辑</a>
                     </div>
                 </div>
@@ -70,16 +70,16 @@
             </div>
             <div v-html="article.content"></div>
             <h1 style="margin: 20px 0" id="comment">评论</h1>
-            <Forum :articleId="Number(this.$route.query.id)" />
+            <Forum :article="article" v-if="article.id"/>
         </el-card>
         <el-card class="message-card">
             <UserMessage
                 :name="blogUser.name"
                 :position="blogUser.position"
-                :img="blogUser.head_portrait"
+                :img="blogUser.headPortrait"
             />
             <div class="partition"></div>
-            <UserMoreMessage :userId="blogId" v-if="blogId"/>
+            <UserMoreMessage :userId="blogId" v-if="blogId" />
         </el-card>
     </el-container>
 </template>
@@ -96,7 +96,7 @@ export default {
     components: {
         UserMessage,
         Forum,
-        UserMoreMessage
+        UserMoreMessage,
     },
     data() {
         return {
@@ -127,6 +127,9 @@ export default {
         showEdit() {
             console.log(this.$store.getters.getId, this.blogId);
             return this.$store.getters.getId == this.blogId;
+        },
+        cHeadPortrait() {
+            return this.URL + this.blogUser.headPortrait;
         },
     },
     methods: {
@@ -316,8 +319,12 @@ export default {
                 .then((res) => {
                     if (res.data.code === 0) {
                         this.blogUser = res.data.data;
+                        console.log(this.blogUser);
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                            type: "error",
+                            message: "请求用户名失败，请重新登陆",
+                        });
                         router.push("/login");
                         console.error("请求标签失败");
                     }
@@ -336,7 +343,10 @@ export default {
                     if (res.data.code === 0) {
                         this.blogMoreUser = res.data.data;
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                            type: "error",
+                            message: "请求用户名失败，请重新登陆",
+                        });
                         router.push("/login");
                         console.error("请求标签失败");
                     }
@@ -395,6 +405,9 @@ export default {
         border-radius: 35px;
         max-width: 100%;
         max-height: 100%;
+        display: block;
+        object-fit: cover;
+        text-align: center;
     }
 }
 .message-card {

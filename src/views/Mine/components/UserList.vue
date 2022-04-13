@@ -4,7 +4,7 @@
             <UserMessage
                 :name="user.name"
                 :position="user.position"
-                :img="user.head_portrait"
+                :img="user.headPortrait"
             >
                 <el-button
                     v-if="attention"

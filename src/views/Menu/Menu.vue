@@ -26,7 +26,7 @@
                 </el-menu-item>
                 <el-menu-item index="forum">
                     <Icon type="ios-people" />
-                    论坛
+                    留言板
                 </el-menu-item>
                 <div class="headRight">
                     <el-input

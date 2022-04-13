@@ -1,84 +1,96 @@
 <template>
-  <div class="comment">
-    <p class="head">
-      <UserMessage :name="comment.name" />
-      <span
-        v-if="comment.subComment && comment.subComment.length"
-        @click="showCommentDetail = !showCommentDetail"
-      >
-        {{showCommentDetail?'关闭':'展开'}}
-      </span>
-    </p>
-    <p>{{ comment.content }}</p>
-    <el-button
-      type="primary"
-      size="mini"
-      @click="showCommentAdd = !showCommentAdd"
-      class="reply"
-    >
-      回复
-    </el-button>
-    <br>
-    <CommentAdd
-      v-if="showCommentAdd"
-      :supId="comment.id"
-      @handleCommentAdd="closeCommentAdd"
-    />
-    <CommentList
-      v-show="showCommentDetail"
-      v-if="comment.subComment && comment.subComment.length"
-      :comments="comment.subComment"
-    />
-  </div>
+    <div class="comment">
+        <p class="head">
+            <UserMessageById :userId="comment.fromId" :toId="comment.toId" />
+            <span
+                v-if="comment.subReplyList && comment.subReplyList.length"
+                @click="showCommentDetail = !showCommentDetail"
+            >
+                {{ showCommentDetail ? "关闭" : "展开" }}
+            </span>
+        </p>
+        <div v-html="comment.content"></div>
+        <el-button
+            type="primary"
+            size="mini"
+            @click="showCommentAdd = !showCommentAdd"
+            class="reply"
+        >
+            回复
+        </el-button>
+        <br />
+        <CommentAdd
+            v-if="showCommentAdd"
+            :parentComment="comment"
+            :article="article"
+            @handleCommentAdd="closeCommentAdd"
+            @reloadForum="getCommentList"
+        />
+        <CommentList
+            v-show="showCommentDetail"
+            :article="article"
+            v-if="comment.subReplyList && comment.subReplyList.length"
+            :comments="comment.subReplyList"
+            @reloadForum="getCommentList"
+        />
+    </div>
 </template>
 
 <script>
-import UserMessage from '../../Mine/components/UserMessage.vue'
-import CommentAdd from './CommentAdd.vue'
-const CommentList = () => import('./CommentList.vue') //异步加载组件引入解决循环引用问题
+import UserMessageById from "../../Mine/components/UserMessageById.vue";
+import CommentAdd from "./CommentAdd.vue";
+const CommentList = () => import("./CommentList.vue"); //异步加载组件引入解决循环引用问题
 export default {
-  name: 'CommentItem',
-  components: {
-    CommentAdd,
-    CommentList,
-    UserMessage,
-  },
-  data() {
-    return {
-      showCommentAdd: false,
-      showCommentDetail: true,
-    }
-  },
-  props: {
-    comment: {
-      type: Object,
-      default: () => {},
+    name: "CommentItem",
+    components: {
+        CommentAdd,
+        CommentList,
+        UserMessageById,
     },
-  },
-  methods: {
-    showCommentAddFun() {
-      this.showCommentAdd = true
+    data() {
+        return {
+            showCommentAdd: false,
+            showCommentDetail: true,
+        };
     },
-    closeCommentAdd() {
-      this.showCommentAdd = false
+    props: {
+        comment: {
+            type: Object,
+            default: () => {},
+        },
+        article: {
+            type: Object,
+            default: () => {},
+        },
     },
-  },
-  mounted() {},
-}
+    methods: {
+        getCommentList() {
+            console.log('item')
+            this.$emit("reloadForum");
+        },
+        showCommentAddFun() {
+            this.showCommentAdd = true;
+        },
+        closeCommentAdd() {
+            this.showCommentAdd = false;
+        },
+    },
+    mounted() {},
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .head {
-  color: #aca9a9;
-  display: flex;
-  justify-content: space-between;
+    color: #aca9a9;
+    display: flex;
+    justify-content: space-between;
 
-  span {
-    cursor: pointer;
-  }
+    span {
+        cursor: pointer;
+    }
 }
 .reply {
-  align-self: end;
+    align-self: end;
 }
 </style>

@@ -50,7 +50,10 @@ export default {
                         this.blogMoreUser = res.data.data;
                         console.log('blogMoreUser',this.blogMoreUser)
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                         console.error("请求标签失败");
                     }

@@ -36,7 +36,7 @@ import Article from '../views/Article.vue'
 // 登录/注册
 import Login from '../views/Login.vue'
 
-// 论坛
+// 留言板
 import Forum from '../views/Forum/Forum.vue'
 
 Vue.use(VueRouter)

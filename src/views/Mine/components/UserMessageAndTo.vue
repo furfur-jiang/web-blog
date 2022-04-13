@@ -8,6 +8,15 @@
         <span class="position">{{position}}</span>
       </div>
     </div>
+    <p style="margin-right:10px">回复</p>
+    <div>
+    <img v-if="!toImg" src="../../../assets/head1.png" />
+      <img v-else :src="cToImg" />
+      <div class="message-name">
+        <span>{{toName}}</span>
+        <span class="position">{{toPosition}}</span>
+      </div>
+    </div>
     <div>
       <slot></slot>
     </div>
@@ -28,11 +37,26 @@ export default {
     img:{
       type:String,
       default:''
+    },
+    toName:{
+      type:String,
+      default:''
+    },
+    toPosition:{
+      type:String,
+      default:''
+    },
+    toImg:{
+      type:String,
+      default:''
     }
   },
   computed:{
     cImg(){
       return this.URL+this.img
+    },
+    cToImg(){
+      return this.URL+this.toImg
     }
   }
 }
@@ -50,6 +74,7 @@ export default {
   img {
     width: 50px;
     height: 50px;
+    border-radius: 50px;
     max-width: 100%;
     max-height: 100%;
     display: block;

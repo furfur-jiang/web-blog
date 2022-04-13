@@ -14,7 +14,7 @@
         </div>
         <div class="markdown">
             <MarkdownPro
-                :value="article.content"
+                :value="content"
                 @on-ready="onReady"
                 @on-copy="onCopy"
                 @on-upload-image="onUploadImage"
@@ -36,7 +36,7 @@
                 <div class="dialog-check-item">
                     <span style="color: black">
                         <span style="color: red">*</span>
-                        分类：
+                        标签：
                     </span>
                     <div class="label-groups">
                         <el-radio-group
@@ -61,12 +61,12 @@
 
                     <el-upload
                         class="avatar-uploader"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :action="ServerUrl"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload"
                     >
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                        <img v-if="picture" :src="picture" class="avatar" />
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </div>
@@ -87,7 +87,7 @@
                 <el-button @click="showSubmitDialog = false" size="small">
                     取 消
                 </el-button>
-                <el-button type="primary" @click="submitArticle" size="small">
+                <el-button type="primary" @click="submitArticle" size="small" :loading="submitLoading">
                     确定并发布
                 </el-button>
             </span>
@@ -120,13 +120,17 @@ export default {
             imageUrl: "",
             textarea: "",
             article: {},
-            selectLabel: [],
+            selectLabel: '',
             labelList: [],
+            picture: "",
+            submitLoading:false,
+            content:''
         };
     },
     created() {
         this.id = this.$route.query.id;
         this.initLabelList();
+        this.ServerUrl = `${this.URL}/web_blog/user/savePicture`;
     },
     methods: {
         // 获取标签列表
@@ -140,21 +144,17 @@ export default {
                 }
             });
         },
-        
         handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+            this.$message.success("上传图片成功");
+            this.article.picture = res.data;
+            this.picture = this.URL + res.data;
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === "image/jpeg";
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-                this.$message.error("上传头像图片只能是 JPG 格式!");
+            const isLt5M = file.size / 1024 / 1024 < 5;
+            if (!isLt5M) {
+                this.$message.error("上传头像图片大小不能超过 5MB!");
             }
-            if (!isLt2M) {
-                this.$message.error("上传头像图片大小不能超过 2MB!");
-            }
-            return isJPG && isLt2M;
+            return isLt5M;
         },
         // 初始化完成时触发
         onReady(data) {
@@ -165,19 +165,22 @@ export default {
         onCopy(text) {
             console.log(text);
         },
-        onUploadImage(file) {
+        async onUploadImage(file) {
             // console.log(file)
             let form = new FormData();
             form.append("file", file);
-            // console.log(form.get('file'))
+            let res = await this.$http.post("/web_blog/user/savePicture", form)
+            const img = res.data.data
             this.insertContent(
-                `![image](http://localhost:8080/img/logo.82b9c7a5.png)`
+                `![image](${this.URL}${img})`
             );
         },
         // 自动保存或者手动保存时触发
         onSave(data) {
-            console.log(data);
+            // console.log(data);
+            this.article.helpContent = data.value;
             this.article.content = data.html;
+             console.log(this.article);
         },
         // 右上发布按钮
         beforeSubmit() {
@@ -186,11 +189,10 @@ export default {
         },
         handleClose() {
             this.showSubmitDialog = false;
-            this.article.title = "";
-            this.article.content = "";
         },
         // 最后的发布按钮
         submitArticle() {
+            console.log("article", this.article);
             this.article.labelId = this.handleLabel();
             if (!this.article.labelId && this.article.labelId != 0) {
                 this.$message({
@@ -205,6 +207,7 @@ export default {
         },
         // 发送请求
         createdArticle() {
+            this.submitLoading = true
             this.$http
                 .post("/web_blog/article/addArticle", this.article)
                 .then((res) => {
@@ -216,16 +219,19 @@ export default {
                         this.handleClose();
                     } else {
                         this.$message({
-                            type: "info",
-                            message: "发布成功",
+                            type: "error",
+                            message: "发布失败，请求用户名失败，请重新登陆",
                         });
+                        // router.push("/login");
                     }
+                    this.submitLoading = false
                 })
                 .catch((err) => {
                     this.$message({
                         type: "info",
-                        message: "发布成功",
+                        message: "发布失败",
                     });
+                    this.submitLoading = false
                 });
         },
         // 获取标签名的id
@@ -288,14 +294,16 @@ span {
 /deep/ .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
+    width: 320px;
     height: 178px;
     line-height: 178px;
     text-align: center;
 }
 /deep/ .avatar {
-    width: 178px;
+    width: 320px;
     height: 178px;
     display: block;
+    object-fit: cover;
+    text-align: center;
 }
 </style>

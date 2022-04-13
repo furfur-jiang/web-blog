@@ -8,7 +8,7 @@
                             src="@/assets/head1.png"
                             v-if="!user.headPortrait"
                         />
-                        <img :src="user.headPortrait" v-else />
+                        <img :src="headPortrait" v-else />
                         <div class="meaasge-name">
                             <h1>{{ user.name }}</h1>
                             <span class="job">{{ user.position }}</span>
@@ -83,6 +83,7 @@ export default {
     data() {
         return {
             activeName: "1",
+            headPortrait:null,
             user: {
                 headPortrait: null,
                 id: null,
@@ -180,8 +181,13 @@ export default {
                     console.log(res);
                     if (res.data.code === 0) {
                         this.user = res.data.data;
+                        this.headPortrait =
+                            this.URL + this.user.headPortrait;
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                     }
                 });
@@ -228,7 +234,10 @@ export default {
                     if (res.data.code === 0) {
                         this.articleListByUserId = res.data.data;
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                     }
                 })
@@ -246,7 +255,10 @@ export default {
                     if (res.data.code === 0) {
                         this.articleLikeListByUserId = res.data.data;
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                     }
                 })
@@ -264,7 +276,10 @@ export default {
                     if (res.data.code === 0) {
                         this.articleCollectListByUserId = res.data.data;
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                     }
                 })
@@ -293,6 +308,9 @@ export default {
                 border-radius: 100px;
                 max-width: 100%;
                 max-height: 100%;
+                display: block;
+                object-fit: cover;
+                text-align: center;
             }
             .meaasge-name {
                 display: flex;

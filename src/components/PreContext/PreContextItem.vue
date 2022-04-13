@@ -11,12 +11,13 @@
                     {{ article.description }}
                 </p>
             </div>
-            <img :src="article.picture" v-if="article.picture" />
+            <!-- {{ article }} -->
+            <img :src="cPicture" v-if="article.picture" class="picture" />
         </div>
         <div class="icons">
             <span>
                 <img src="../../assets/eye.svg" />
-                <span>20</span>
+                <span>{{ article.visitCount}}</span>
             </span>
             <span>
                 <img src="../../assets/good.svg" />
@@ -65,6 +66,13 @@ export default {
         this.getLabelById();
     },
     computed: {
+        cPicture() {
+            if (this.article.picture) {
+                return this.URL + this.article.picture;
+            } else {
+                return null;
+            }
+        },
         createdTime() {
             console.log(this.article.createTime);
             return formatDay(this.article.createTime);
@@ -109,9 +117,12 @@ export default {
                 .then((res) => {
                     if (res.data.code === 0) {
                         this.deleteDisabled = false;
-                        this.$emit('initList')
+                        this.$emit("initList");
                     } else {
-                        alert("请求用户失败，请重新登陆");
+                        this.$message({
+                            type:'error',
+                            message:'请求用户失败，请重新登陆'
+                        })
                         router.push("/login");
                     }
                 })
@@ -139,14 +150,17 @@ export default {
             // this.$router.push({ path: `/home/123` })
         },
         getUserById() {
-            console.log(this.article)
+            console.log(this.article);
             this.$http
                 .get(`/web_blog/user/getUserById?id=${this.article.userId}`)
                 .then((res) => {
                     if (res.data.code === 0) {
                         this.blogName = res.data.data.name;
                     } else {
-                        alert("请求用户失败，请重新登陆");
+                        this.$message({
+                            type:'error',
+                            message:'请求用户失败，请重新登陆'
+                        })
                         router.push("/login");
                     }
                 })
@@ -209,6 +223,10 @@ export default {
             }
         }
     }
+    .article {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 .contain:after {
     content: "";
@@ -219,5 +237,14 @@ export default {
     position: relative;
     bottom: 0;
     left: 0;
+}
+</style>
+<style scoped>
+/deep/ .picture {
+    width: 320px;
+    height: 178px;
+    display: block;
+    object-fit: cover;
+    text-align: center;
 }
 </style>

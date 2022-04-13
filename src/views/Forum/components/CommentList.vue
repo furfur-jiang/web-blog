@@ -1,126 +1,103 @@
 <template>
-  <div :class="{ comment: true, subComment: comments && comments.length > 0 }">
-    <div v-for="item in commentsList" :key="item.id">
-      <CommentItem :comment="item" />
+    <div
+        v-if="renderComponent"
+        :class="{
+            comment: true,
+            subReplyList: comments && comments.length > 0,
+        }"
+    >
+        <div v-for="item in commentsList" :key="item.id">
+            <CommentItem
+                :comment="item"
+                :article="article"
+                @reloadForum="getCommentList"
+            />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import CommentItem from './CommentItem.vue'
+import CommentItem from "./CommentItem.vue";
 export default {
-  name: 'CommentList',
-  components: {
-    CommentItem,
-  },
-  data() {
-    return {
-      commentsList: [],
-    }
-  },
-  props: {
-    comments: {
-      type: Array,
-      props: () => [],
+    fromId: "CommentList",
+    components: {
+        CommentItem,
     },
-    articleId:{//有则要请求
-        type:Number,
-        props:0
-    }
-  },
-  mounted() {
-    if (!this.comments) {
-      this.commentsList = [
-        {
-          id: '1',
-          name: 'fur',
-          time: '1641645103',
-          content: '111',
-          sup: null,
-          subComment: [
-            {
-              id: '4',
-              name: 'furSub',
-              time: '1641652303',
-              content: '444',
-              subComment: [
-                {
-                  id: '7',
-                  name: 'furSub',
-                  time: '1641652303',
-                  content: '777',
-                  subComment: [],
-                  sup: '4',
-                },
-              ],
-              sup: '1',
-            },
-            {
-              id: '6',
-              name: 'furSub',
-              time: '1641652303',
-              content: '666',
-              subComment: [],
-              sup: '1',
-            },
-          ],
+    data() {
+        return {
+            commentsList: [],
+            renderComponent: true,
+        };
+    },
+    props: {
+        comments: {
+            type: Array,
+            default: undefined,
         },
-        {
-          id: '2',
-          sup: null,
-          name: 'fur2',
-          time: '1641627103',
-          content: '222',
-          subComment: [
-            {
-              id: '5',
-              name: 'fur1Sub',
-              time: '1641652303',
-              content: '555',
-              subComment: [],
-              sup: '2',
-            },
-          ],
+        article: {
+            type: Object,
+            default: () => {},
         },
-        {
-          id: '3',
-          sup: null,
-          name: 'fur3',
-          time: '1641616303',
-          content: '333',
-          subComment: [],
+    },
+    mounted() {
+        if (!this.comments && this.commentsList.length === 0) {
+            this.getCommentList();
+        } else {
+            this.commentsList = this.comments;
+        }
+    },
+    methods: {
+        getCommentList() {
+            this.renderComponent = false;
+
+            let id = null;
+            if (this.article) {
+                id = this.article.id;
+            } else {
+                id = 999999999;
+            }
+            this.$http
+                .get(
+                    `/web_blog/articleComment/addArticleCommentAndReply?articleId=${id}`
+                )
+                .then((res) => {
+                    if (res.data.code === 0) {
+                        console.log(res.data.data);
+                        this.commentsList = res.data.data;
+                        this.$nextTick(() => {
+                            // 在 DOM 中添加 my-component 组件
+                            this.renderComponent = true;
+                        });
+                    }
+                });
         },
-      ]
-    } else {
-      this.commentsList = this.comments
-    }
-  },
-}
+    },
+};
 </script>
 
 <style scoped lang="scss">
 .comment {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-      width: 95%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 93%;
+    min-height: 500px;
 }
-.subComment {
-  background: #f9fafb;
-  border-radius: 2px;
-  margin-left: 50px;
+.subReplyList {
+    background: #f9fafb;
+    border-radius: 2px;
 }
 .head {
-  color: #aca9a9;
-  align-items: center;
-  span {
-    cursor: pointer;
-    margin-right: 20px;
-  }
+    color: #aca9a9;
+    align-items: center;
+    span {
+        cursor: pointer;
+        margin-right: 20px;
+    }
 }
 .reply {
-  text-decoration: underline;
-  color: #aca9a9;
-  cursor: pointer;
+    text-decoration: underline;
+    color: #aca9a9;
+    cursor: pointer;
 }
 </style>

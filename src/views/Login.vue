@@ -134,12 +134,12 @@ export default {
                         message: "请输入手机号",
                         trigger: "blur",
                     },
-                    // {
-                    //     min: 11,
-                    //     max: 11,
-                    //     message: "请输入正确手机号",
-                    //     trigger: "blur",
-                    // },
+                    {
+                        min: 11,
+                        max: 11,
+                        message: "请输入正确手机号",
+                        trigger: "blur",
+                    },
                 ],
                 password: [
                     { required: true, message: "请输入密码", trigger: "blur" },
@@ -164,12 +164,12 @@ export default {
                         message: "请输入手机号",
                         trigger: "blur",
                     },
-                    // {
-                    //     min: 11,
-                    //     max: 11,
-                    //     message: "请输入正确手机号",
-                    //     trigger: "blur",
-                    // },
+                    {
+                        min: 11,
+                        max: 11,
+                        message: "请输入正确手机号",
+                        trigger: "blur",
+                    },
                 ],
                 name: [
                     { required: true, message: "请输入名称", trigger: "blur" },
@@ -208,11 +208,13 @@ export default {
         },
         checkCheck() {},
         submitRegisterForm(formName) {
+            this.registerBtnLoading = false;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$http
                         .post("/web_blog/user/saveUser", this.registerForm)
                         .then((res) => {
+                            console.log(res);
                             if (res.data.code === 0) {
                                 this.loginForm.phone = this.registerForm.phone;
                                 this.loginForm.password =
@@ -221,7 +223,10 @@ export default {
                                 this.goHome();
                                 this.registerBtnLoading = false;
                             } else {
-                                alert(res.data.msg);
+                                this.$message({
+                                    type: "error",
+                                    message: res.data.msg,
+                                });
                                 this.registerBtnLoading = false;
                             }
                         });
@@ -233,19 +238,21 @@ export default {
             });
         },
         submitLoginForm(formName) {
-            console.log(formName);
+            this.loginBtnLoading = true;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$http
                         .post("/login/checkLogin", this.loginForm)
                         .then((res) => {
-                            res = res.data;
-                            if (res.code === 0) {
-                                this.setUserLocal(res.data);
+                            if (res.data.code === 0) {
+                                this.setUserLocal(res.data.data);
                                 this.goHome();
                                 this.loginBtnLoading = false;
                             } else {
-                                alert(res.data.msg);
+                                this.$message({
+                                    type: "error",
+                                    message: res.data.msg,
+                                });
                                 this.loginBtnLoading = false;
                             }
                         });
@@ -257,6 +264,7 @@ export default {
             });
         },
         resetForm(formName) {
+            console.log('?')
             this.$refs[formName].resetFields();
         },
         setUserLocal(user) {

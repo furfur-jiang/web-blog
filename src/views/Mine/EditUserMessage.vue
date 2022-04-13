@@ -55,14 +55,14 @@
                 </el-form>
                 <el-upload
                     class="avatar-uploader"
-                    action="http://192.168.100.3:8089/"
+                    :action="ServerUrl"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload"
                 >
                     <img
-                        v-if="userForm.head_portrait"
-                        :src="userForm.head_portrait"
+                        v-if="userForm.headPortrait"
+                        :src="headPortrait"
                         class="avatar"
                     />
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -85,21 +85,15 @@ import {
 export default {
     data() {
         return {
-            user: {
-                headPortrait: null,
-                id: null,
-                introduction: null,
-                name: null,
-                phone: null,
-                sex: null,
-            },
+            headPortrait: "",
             userForm: {
                 name: "",
                 position: "",
                 company: "",
                 homepage: "",
                 introduction: "",
-                head_portrait: "",
+                headPortrait: "",
+                sex: null,
             },
             rules: {
                 name: [
@@ -125,6 +119,8 @@ export default {
     },
     created() {
         this.initUser();
+        console.log(this.URL);
+        this.ServerUrl = `${this.URL}/web_blog/user/savePicture`;
     },
     methods: {
         initUser() {
@@ -133,9 +129,16 @@ export default {
                 .then((res) => {
                     if (res.data.code === 0) {
                         this.userForm = res.data.data;
+                        if (this.userForm.headPortrait) {
+                            this.headPortrait =
+                                this.URL + this.userForm.headPortrait;
+                        }
                         console.log(this.userForm);
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                            type: "error",
+                            message: "请求用户名失败，请重新登陆",
+                        });
                         router.push("/login");
                     }
                 });
@@ -148,12 +151,16 @@ export default {
                         .then((res) => {
                             if (res.data.code === 0) {
                                 console.log(this.userForm);
+                                this.initUser();
                                 this.$message({
-                                    type:'success',
-                                    message:'更新成功'
-                                })
+                                    type: "success",
+                                    message: "更新成功",
+                                });
                             } else {
-                                alert("请求用户名失败，请重新登陆");
+                                this.$message({
+                                    type: "error",
+                                    message: "请求用户名失败，请重新登陆",
+                                });
                                 router.push("/login");
                             }
                         });
@@ -164,20 +171,17 @@ export default {
             });
         },
         handleAvatarSuccess(res, file) {
-            console.log(file)
-            this.userForm.head_portrait = URL.createObjectURL(file.raw);
+            this.$message.success("上传头像图片成功");
+            this.userForm.headPortrait = res.data;
+            this.headPortrait = res.data;
+            this.submitForm("userForm");
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === "image/jpeg";
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-                this.$message.error("上传头像图片只能是 JPG 格式!");
+            const isLt5M = file.size / 1024 / 1024 < 5;
+            if (!isLt5M) {
+                this.$message.error("上传头像图片大小不能超过 5MB!");
             }
-            if (!isLt2M) {
-                this.$message.error("上传头像图片大小不能超过 2MB!");
-            }
-            return isJPG && isLt2M;
+            return isLt5M;
         },
         resetForm(formName) {
             this.$refs[formName].resetFields();
@@ -267,5 +271,7 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+    object-fit: cover;
+    text-align: center;
 }
 </style>

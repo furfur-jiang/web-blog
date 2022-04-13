@@ -53,7 +53,10 @@ export default {
                         this.articleList = res.data.data;
                         console.log(this.articleList);
                     } else {
-                        alert("请求用户名失败，请重新登陆");
+                        this.$message({
+                                    type:'error',
+                                    message:'请求用户名失败，请重新登陆'
+                                })
                         router.push("/login");
                     }
                 });
