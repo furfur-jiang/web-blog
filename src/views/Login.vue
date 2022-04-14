@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { ADD_TOKEN, ADD_PHONE, ADD_ID, ADD_NAME } from "@/store/types";
+import { ADD_ID, ADD_NAME, ADD_PHONE, ADD_TOKEN } from "@/store/types";
 
 export default {
     name: "Login",

@@ -1,8 +1,8 @@
 <template>
   <div class="block">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span style="fontsize: 17px;">创造活动</span>
+    <!-- <el-card class="box-card"> -->
+      <!-- <div slot="header" class="clearfix">
+        <span style="fontsize: 17px;">创作活动</span>
         <el-button
           style="float: right; padding: 3px 0;"
           type="text"
@@ -10,14 +10,14 @@
         >
           查看更多
         </el-button>
-      </div>
+      </div> -->
       <!-- TODO:轮播换图片 -->
-      <el-carousel height="200px">
+      <!-- <el-carousel height="200px">
         <el-carousel-item v-for="item in 4" :key="item">
           <h3 class="small">{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
-    </el-card>
+    </el-card> -->
     <el-card class="box-card" style="margin-top: 20px;">
       <div slot="header" class="clearfix">
         <span style="fontsize: 17px;">数据概览</span>
@@ -33,6 +33,19 @@
     </el-card>
     <el-card class="box-card" style="margin-top: 20px;">
       <div slot="header" class="clearfix">
+        <span style="fontsize: 17px;">近七天数据变化图</span>
+        <el-button
+          style="float: right; padding: 3px 0;"
+          type="text"
+          @click="go('contentManage')"
+        >
+          查看更多
+        </el-button>
+      </div>
+      <LineCharts />
+    </el-card>
+    <!-- <el-card class="box-card" style="margin-top: 20px;">
+      <div slot="header" class="clearfix">
         <span style="fontsize: 17px;">近期发布</span>
         <el-button
           style="float: right; padding: 3px 0;"
@@ -45,18 +58,21 @@
       <div v-for="item in contextList" :key="item.articleId">
         <PreContextLess />
       </div>
-    </el-card>
+    </el-card> -->
   </div>
 </template>
 
 <script>
-import ArticleData from '../../../components/ArticleData'
 import PreContextLess from '../../../components/PreContext/PreContextLess'
+import ArticleData from './ArticleData'
+import LineCharts from './LineCharts'
+
 export default {
   name: 'Index',
   components: {
     PreContextLess,
     ArticleData,
+    LineCharts
   },
   data() {
     return {

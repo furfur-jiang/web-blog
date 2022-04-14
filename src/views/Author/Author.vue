@@ -26,7 +26,7 @@
             >
                 <el-menu-item index="index" name="index">
                     <i class="el-icon-s-home"></i>
-                    <span slot="title">首页</span>
+                    <span slot="title">内容数据</span>
                 </el-menu-item>
                 <el-submenu index="2">
                     <template slot="title">
@@ -35,14 +35,14 @@
                     </template>
                     <el-menu-item index="articleManage">文章管理</el-menu-item>
                 </el-submenu>
-                <el-submenu index="3">
+                <!-- <el-submenu index="3">
                     <template slot="title">
                         <i class="el-icon-s-marketing"></i>
                         <span>数据中心</span>
                     </template>
                     <el-menu-item index="contentManage">内容数据</el-menu-item>
                     <el-menu-item index="fansManage">关注者数据</el-menu-item>
-                </el-submenu>
+                </el-submenu> -->
                 <el-submenu index="4">
                     <template slot="title">
                         <i class="el-icon-s-flag"></i>

@@ -8,7 +8,7 @@
   >
     <span class="emoji-button" @click.stop="togglePickerVisibility">
       <img
-        :class="{inactive:!pickerVisible}"
+        :class="{ inactive: !pickerVisible }"
         class="button-icon"
         src="../emoji/icon.svg"
         width="20"
@@ -17,9 +17,16 @@
       />
       <span v-if="buttonTextVisible" class="button-text">表情</span>
     </span>
-    <ul :class="['emoji-picker',pickerPosition]" v-if="pickerVisible">
-      <li v-for="(url,key) in files" :key="key" class="emoji-picker-item">
-        <img class="emoji-icon" @click="handlerSelect" width="20" height="20" :src="url" alt />
+    <ul :class="['emoji-picker', pickerPosition]" v-if="pickerVisible">
+      <li v-for="(url, key) in files" :key="key" class="emoji-picker-item">
+        <img
+          class="emoji-icon"
+          @click="handlerSelect"
+          width="20"
+          height="20"
+          :src="url"
+          alt
+        />
       </li>
     </ul>
   </div>
@@ -32,41 +39,41 @@ export default {
   data() {
     return {
       pickerVisible: false,
-      files: files.map(url => require(`../emoji/${url.slice(2)}`))
+      files: files.map((url) => require(`../emoji/${url.slice(2)}`)),
     }
   },
   props: {
     buttonTextVisible: {
       type: Boolean,
-      default: true
+      default: true,
     },
     triggerPick: {
       tyep: String,
       default: 'hover',
       validator(value) {
         return ['hover', 'click'].includes(value)
-      }
+      },
     },
     pickerPosition: {
       type: String,
       default: 'right',
       validator(value) {
         return ['left', 'middle', 'right'].includes(value)
-      }
-    }
+      },
+    },
   },
   watch: {
     pickerVisible(newValue) {
       newValue ? this.$emit('activated') : this.$emit('inactivated')
-    }
+    },
   },
   mounted() {
-    const docHandleClick = (this.docHandleClick = e => {
+    const docHandleClick = (this.docHandleClick = (e) => {
       if (!this.$refs.container.contains(e.target)) {
         this.hidePicker()
       }
     })
-    const handleKeyup = (this.handleKeyup = e => {
+    const handleKeyup = (this.handleKeyup = (e) => {
       if (e.key === 'Escape') {
         this.hidePicker()
       }
@@ -91,25 +98,25 @@ export default {
       }
     },
     handleMouse() {
-      const mouseenter = function() {
+      const mouseenter = function () {
         this.pickerVisible = true
       }.bind(this)
-      const mouseleave = function() {
+      const mouseleave = function () {
         this.pickerVisible = false
       }.bind(this)
       if (this.triggerPick === 'hover') {
         return {
           mouseenter,
-          mouseleave
+          mouseleave,
         }
       } else {
         return {}
       }
-    }
-  }
+    },
+  },
 }
 </script>
-<style scoped >
+<style scoped>
 ul,
 li {
   list-style: none;
@@ -122,6 +129,8 @@ li {
   display: flex;
   flex-wrap: wrap;
   width: 300px;
+  top: -200px;
+  left: 50px;
 }
 .emoji-picker-item {
   margin: 4px;

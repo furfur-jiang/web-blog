@@ -80,8 +80,7 @@ export default {
     padding: 5px;
     display: flex;
     flex-direction: column;
-    width: 93%;
-    min-height: 500px;
+    width: 750px
 }
 .subReplyList {
     background: #f9fafb;

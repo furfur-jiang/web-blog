@@ -1,30 +1,38 @@
 <template>
-  <el-card>
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-    >
-      <el-menu-item index="1">文章数据</el-menu-item>
-    </el-menu>
+  <div>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>数据概览</span>
+      </div>
+      <ArticleData />
+    </el-card>
     <br />
-    <ArticleData />
-  </el-card>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span>近七天数据变化图</span>
+      </div>
+      <LineCharts />
+    </el-card>
+  </div>
 </template>
 
 <script>
-import ArticleData from '../../../components/ArticleData'
+import ArticleData from './ArticleData'
+import LineCharts from './LineCharts'
 
 export default {
   name: 'ContentManage',
   components: {
     ArticleData,
+    LineCharts,
   },
   data() {
     return {
       activeIndex: '1',
     }
+  },
+  methods: {
+    handleSelect() {},
   },
 }
 </script>
