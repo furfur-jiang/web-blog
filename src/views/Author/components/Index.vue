@@ -44,33 +44,16 @@
       </div>
       <LineCharts />
     </el-card>
-    <!-- <el-card class="box-card" style="margin-top: 20px;">
-      <div slot="header" class="clearfix">
-        <span style="fontsize: 17px;">近期发布</span>
-        <el-button
-          style="float: right; padding: 3px 0;"
-          type="text"
-          @click="go('articleManage')"
-        >
-          查看更多
-        </el-button>
-      </div>
-      <div v-for="item in contextList" :key="item.articleId">
-        <PreContextLess />
-      </div>
-    </el-card> -->
   </div>
 </template>
 
 <script>
-import PreContextLess from '../../../components/PreContext/PreContextLess'
 import ArticleData from './ArticleData'
 import LineCharts from './LineCharts'
 
 export default {
   name: 'Index',
   components: {
-    PreContextLess,
     ArticleData,
     LineCharts
   },

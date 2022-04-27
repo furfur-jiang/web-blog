@@ -16,7 +16,7 @@
                 {{ activity.address }}
             </span>
             <el-button
-                type="primary"
+                type="info"
                 size="mini"
                 class="btn"
                 v-if="activity.status === '0'"

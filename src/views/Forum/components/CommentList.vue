@@ -1,19 +1,19 @@
 <template>
-    <div
-        v-if="renderComponent"
-        :class="{
-            comment: true,
-            subReplyList: comments && comments.length > 0,
-        }"
-    >
-        <div v-for="item in commentsList" :key="item.id">
-            <CommentItem
-                :comment="item"
-                :article="article"
-                @reloadForum="getCommentList"
-            />
-        </div>
+<div
+    v-if="renderComponent"
+    :class="{
+        comment: true,
+        subReplyList: comments && comments.length > 0,
+    }"
+>
+    <div v-for="item in commentsList" :key="item.id">
+        <CommentItem
+            :comment="item"
+            :article="article"
+            @reloadForum="getCommentList"
+        />
     </div>
+</div>
 </template>
 
 <script>
@@ -48,6 +48,7 @@ export default {
     },
     methods: {
         getCommentList() {
+            console.log('??')
             this.renderComponent = false;
 
             let id = null;
@@ -77,7 +78,6 @@ export default {
 
 <style scoped lang="scss">
 .comment {
-    padding: 5px;
     display: flex;
     flex-direction: column;
     width: 750px
@@ -85,6 +85,7 @@ export default {
 .subReplyList {
     background: #f9fafb;
     border-radius: 2px;
+    margin-left: 5px;
 }
 .head {
     color: #aca9a9;

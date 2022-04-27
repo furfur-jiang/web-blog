@@ -77,10 +77,8 @@
 <script>
 import router from "@/router";
 import {
-    REMOVE_TOKEN,
-    REMOVE_PHONE,
-    REMOVE_ID,
-    REMOVE_NAME,
+REMOVE_ID,
+REMOVE_NAME, REMOVE_PHONE, REMOVE_TOKEN
 } from "@/store/types";
 export default {
     data() {

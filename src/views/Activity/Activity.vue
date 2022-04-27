@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import ActivityCard from "./ActivityCard.vue";
 import router from "@/router";
+import ActivityCard from "./ActivityCard.vue";
 export default {
     name: "Activity",
     components: {

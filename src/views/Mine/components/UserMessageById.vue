@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import router from '@/router';
 import UserMessage from "./UserMessage.vue";
 import UserMessageAndTo from "./UserMessageAndTo.vue";
 export default {

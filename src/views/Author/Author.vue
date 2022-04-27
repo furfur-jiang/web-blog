@@ -17,7 +17,7 @@
             </el-button>
             <el-menu
                 style="margin-top: 20px"
-                default-active="2"
+                default-active="1"
                 :default-openeds="defaultOpeneds"
                 class="el-menu-vertical"
                 @open="handleOpen"
@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import UserMessage from "../Mine/components/UserMessage";
 import router from "@/router";
+import UserMessage from "../Mine/components/UserMessage";
 export default {
     name: "Author",
     components: {

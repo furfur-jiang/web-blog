@@ -38,7 +38,6 @@
                         show-password
                     ></el-input>
                 </el-form-item>
-                <!-- <img :src="base64Img" /> -->
                 <el-form-item>
                     <el-button
                         type="primary"
