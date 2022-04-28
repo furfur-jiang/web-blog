@@ -1,14 +1,42 @@
 <template>
   <div class="comment">
-    <p class="head">
+    <div class="head">
       <UserMessageById :userId="comment.fromId" :toId="comment.toId" />
-      <span
-        v-if="comment.subReplyList && comment.subReplyList.length"
-        @click="showCommentDetail = !showCommentDetail"
-      >
-        {{ showCommentDetail ? '关闭' : '展开' }}
-      </span>
-    </p>
+      <div>
+        <span
+          v-if="comment.subReplyList && comment.subReplyList.length"
+          @click="showCommentDetail = !showCommentDetail"
+          style="margin-right: 10px;"
+        >
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="关闭回复"
+            placement="bottom-start"
+            v-if="showCommentDetail"
+          >
+            <i class="el-icon-arrow-up icon_size"></i>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="展开回复"
+            placement="bottom-start"
+            v-else
+          >
+            <i class="el-icon-arrow-down icon_size"></i>
+          </el-tooltip>
+        </span>
+        <el-popconfirm title="确定删除吗？" @confirm="deleteComment()">
+          <i
+            class="el-icon-delete icon_size"
+            v-if="userId == comment.fromId"
+            slot="reference"
+            style="color: #ff000099;"
+          ></i>
+        </el-popconfirm>
+      </div>
+    </div>
     <div v-html="comment.content"></div>
     <el-button
       type="primary"
@@ -63,6 +91,11 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    userId() {
+      return this.$store.getters.getId
+    },
+  },
   methods: {
     getCommentList() {
       console.log('item')
@@ -74,8 +107,34 @@ export default {
     closeCommentAdd() {
       this.showCommentAdd = false
     },
+    async deleteComment() {
+      let res = ''
+      if (!this.comment.parentId) {
+        res = await this.$http.delete(
+          `/option/articleComment/deleteArticleComment?CommentId=${this.comment.id}`,
+        )
+      } else {
+        res = await this.$http.delete(
+          `/option/articleReply/addArticleComment?ReplyId=${this.comment.id}`,
+        )
+      }
+      if (res.data.data) {
+        this.$message({
+          type: 'success',
+          message: '删除评论成功',
+        })
+        this.getCommentList()
+      } else {
+        this.$message({
+          type: 'error',
+          message: '删除评论失败',
+        })
+      }
+    },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.comment)
+  },
 }
 </script>
 
@@ -92,5 +151,8 @@ export default {
 }
 .reply {
   align-self: end;
+}
+.icon_size{
+    font-size: 20px;
 }
 </style>

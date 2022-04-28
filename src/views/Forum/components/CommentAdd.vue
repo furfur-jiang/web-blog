@@ -90,6 +90,7 @@ export default {
                         message: "添加评论成功",
                     });
                 }
+                location.reload();
             } else {
                 res = await this.$http.post(
                     "/web_blog/articleReply/addArticleReply",
