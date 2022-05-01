@@ -38,7 +38,7 @@ axios.interceptors.request.use((config) => {
     router.push('/login')
     return Promise.reject(error)
 })
-Vue.prototype.URL = 'http://192.168.100.3:8089'
+Vue.prototype.URL = 'http://192.168.1.102:8089'
 Vue.prototype.$http = axios
 new Vue({
     router,

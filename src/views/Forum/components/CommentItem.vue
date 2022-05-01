@@ -111,11 +111,11 @@ export default {
       let res = ''
       if (!this.comment.parentId) {
         res = await this.$http.delete(
-          `/option/articleComment/deleteArticleComment?CommentId=${this.comment.id}`,
+          `/web_blog/articleComment/deleteArticleComment?CommentId=${this.comment.id}`,
         )
       } else {
         res = await this.$http.delete(
-          `/option/articleReply/addArticleComment?ReplyId=${this.comment.id}`,
+          `/web_blog/articleReply/addArticleComment?ReplyId=${this.comment.id}`,
         )
       }
       if (res.data.data) {
